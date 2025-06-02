@@ -2,7 +2,7 @@
 import { Langbase, MemoryRetrieveResponse } from 'langbase';
 
 const langbase = new Langbase({
-    apiKey: import.meta.env.LANGBASE_API_KEY,
+    apiKey: import.meta.env.VITE_LANGBASE_API_KEY!,
 });
 
 export async function runAiSupportAgent({
@@ -61,7 +61,7 @@ export async function runMemoryAgent(query: string) {
         topK: 4,
         memory: [
             {
-                name: 'knowledge-base',
+                name: 'ai-support-agent',
             },
         ],
     });
