@@ -129,7 +129,7 @@ const AuthPage = () => {
             </form>
 
             <div className="mt-6 text-center text-sm text-dark-400">
-              <p>For demo purposes, any email and password (min 6 chars) will work</p>
+              <p>Only recognized users credentials  are accepted, contact the admin</p>
             </div>
           </div>
         </motion.div>
