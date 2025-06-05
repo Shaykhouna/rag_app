@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Lock, Mail, Bot, ArrowLeft } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { AuthContext, useAuth } from '../context/AuthContext';
 import Button from '../components/ui/Button';
+
 
 const AuthPage = () => {
   const [email, setEmail] = useState('');
@@ -13,6 +14,14 @@ const AuthPage = () => {
 
   const navigate = useNavigate();
   const { login } = useAuth();
+
+  // const auth = useContext(AuthContext);
+
+  // useEffect(() => {
+  //   if (!auth?.user) {
+  //     navigate('/auth');
+  //   }
+  // }, [auth, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

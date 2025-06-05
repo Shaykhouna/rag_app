@@ -1,9 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { MessageSquare, Send, FileUp, Bot } from 'lucide-react';
+import { MessageSquare, Send, FileUp, Bot, LogOut } from 'lucide-react';
 import { runMemoryAgent, runAiSupportAgent } from '../agent/agents';
 import Button from '../components/ui/Button';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 interface Message {
   id: number;
@@ -55,6 +57,12 @@ const LandingPage = () => {
     }, 1000);
   };
 
+  const auth = useContext(AuthContext);
+
+  if (!auth) return null; // just in case
+
+  const { isAuthenticated, logout } = auth;
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -67,9 +75,22 @@ const LandingPage = () => {
           <Bot className="text-primary-400 h-6 w-6" />
           <span className="font-semibold text-lg text-primary-100">AssistAI</span>
         </div>
+        <div className='flex items-center space-x-4'>
+        {!isAuthenticated ? (
         <Link to="/auth">
           <Button primary>Sign In</Button>
         </Link>
+        ) : (
+          <>
+          <Link to="/dashboard">
+            <Button primary>Dashboard</Button>
+          </Link>
+            <Button onClick={logout} icon={<LogOut size={16} />}>
+            Sign Out
+          </Button>
+          </>
+        )}
+        </div>
       </header>
 
       {/* Main content */}

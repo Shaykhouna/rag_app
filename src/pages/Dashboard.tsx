@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { LogOut, Upload, File, FileText, Image, Film, Archive, Trash2, Bot, Plus, Cloud } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import Button from '../components/ui/Button';
+import { Link } from 'react-router-dom';
+import { useRef } from 'react';
 
 interface UploadedFile {
   id: string;
@@ -17,6 +19,14 @@ const Dashboard = () => {
   const [files, setFiles] = useState<UploadedFile[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [isPresent, setIsPresent] = useState(false);
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleButtonClick = () => {
+    console.log("Button  Clicked");
+    
+    inputRef.current?.click();
+  };
 
   const handleLogout = () => {
     logout();
@@ -102,10 +112,12 @@ const Dashboard = () => {
     <div className="min-h-screen flex flex-col">
       {/* Header */}
       <header className="py-4 px-6 backdrop-blur-sm bg-dark-900/70 border-b border-dark-800 flex justify-between items-center">
-        <div className="flex items-center space-x-2">
-          <Bot className="text-primary-400 h-6 w-6" />
-          <span className="font-semibold text-lg text-primary-100">AssistAI</span>
-        </div>
+        <Link to="/">
+          <div className="flex items-center space-x-2">
+            <Bot className="text-primary-400 h-6 w-6" />
+            <span className="font-semibold text-lg text-primary-100">AssistAI</span>
+          </div>
+        </Link>
 
         <div className="flex items-center gap-4">
           <span className="text-dark-300">
@@ -142,9 +154,8 @@ const Dashboard = () => {
 
           {/* Upload area */}
           <motion.div
-            className={`border-2 border-dashed rounded-xl p-8 text-center ${
-              isDragging ? 'border-primary-500 bg-primary-500/5' : 'border-dark-700'
-            } transition-colors duration-200 mb-8`}
+            className={`border-2 border-dashed rounded-xl p-8 text-center ${isDragging ? 'border-primary-500 bg-primary-500/5' : 'border-dark-700'
+              } transition-colors duration-200 mb-8`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
@@ -163,7 +174,7 @@ const Dashboard = () => {
                   onChange={handleFileUpload}
                   className="hidden"
                 />
-                <Button primary>Select Files</Button>
+                <Button primary onClick={handleButtonClick}>Select Files</Button>
               </label>
             </div>
           </motion.div>

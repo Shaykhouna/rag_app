@@ -1,15 +1,19 @@
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { ReactNode } from 'react';
+import { AuthContext, /* useAuth*/ } from '../context/AuthContext';
+import { ReactNode, useContext } from 'react';
 
 interface ProtectedRouteProps {
   children: ReactNode;
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const { isAuthenticated } = useAuth();
+  // const { isAuthenticated } = useAuth();
+  const auth = useContext(AuthContext)
 
-  if (!isAuthenticated) {
+  // if (!isAuthenticated) {
+  //   return <Navigate to="/auth" replace />;
+  // }
+  if (!auth?.user) {
     return <Navigate to="/auth" replace />;
   }
 
